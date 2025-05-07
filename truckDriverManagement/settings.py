@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from django.templatetags.static import static
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -113,19 +115,50 @@ USE_I18N = True
 
 USE_TZ = True
 
+from django.urls import reverse_lazy
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'  # URL for static files in the browser
+
+# This is where static files are collected to when you run 'collectstatic'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# This is for any static files you are manually adding to the project during development
 STATICFILES_DIRS = [BASE_DIR / "static"]
 
+MEDIA_URL = '/media/'
+
+# The filesystem path where media files will be stored
+MEDIA_ROOT = BASE_DIR / 'media'
+LOGIN_REDIRECT_URL = '/dashbord/'
+
+
 UNFOLD = {
-    "STYLES": [
-        lambda request: static("css/styles.css"),
-    ]
+    "SITE_TITLE": "TMS",
+    "SITE_HEADER": "Transport Management System",
+    "SITE_URL": "/dashbord/",
+    "SITE_ICON": lambda request: static("logo.png"),
+    "COLORS": {
+        "primary": {
+            "50": "250 245 255",
+            "100": "243 232 255",
+            "200": "233 213 255",
+            "300": "216 180 254",
+            "400": "192 132 252",
+            "500": "168 85 247",
+            "600": "147 51 234",
+            "700": "126 34 206",
+            "800": "107 33 168",
+            "900": "88 28 135",
+        },
+    },
 }
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -1,0 +1,59 @@
+# Python bytecode files
+__pycache__/
+*.py[cod]
+
+# Django migrations
+*/migrations/
+
+# Static files
+/static/
+media/
+/staticfiles/
+
+# Environment settings
+.env
+*.env
+
+# Virtual environment
+venv/
+env/
+.venv/
+.idea/
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# IDE specific files
+*.swp
+*.swo
+
+# Log files
+*.log
+
+# Coverage reports
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Database files (if you're using SQLite)
+db.sqlite3
+
+# MySQL/PostgreSQL database dumps
+*.sql
+*.bak
+
+# PyCharm project files
+.idea/
+
+# VSCode project files
+.vscode/
+
+# Other files to ignore (if necessary)
+*.pid
+*.log
+*.pot
+*.mo
+
+# Add your custom ignore patterns if needed
