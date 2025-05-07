@@ -8,6 +8,7 @@ class Driver(models.Model):
     address = models.TextField()
     date_of_birth = models.DateField()
     experience_years = models.PositiveIntegerField()
+    monthly_salary = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -32,6 +33,8 @@ class Route(models.Model):
     distance_km = models.FloatField()
     expected_travel_time_hrs = models.FloatField()
     description = models.TextField(blank=True)
+    base_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    estimated_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.source} to {self.destination}"
@@ -49,6 +52,20 @@ class Assignment(models.Model):
         ("Completed", "Completed"),
         ("Cancelled", "Cancelled"),
     ])
+    advance_paid = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    fuel_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    toll_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    misc_spent = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
         return f"{self.driver.name} - {self.truck.registration_number} on {self.route}"
+
+class DriverPayment(models.Model):
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE, related_name='payments')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    date = models.DateField(auto_now_add=True)
+    description = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.driver.name} - {self.amount} on {self.date}"

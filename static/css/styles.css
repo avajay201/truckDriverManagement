@@ -1,0 +1,18 @@
+fieldset input, fieldset select, fieldset optgroup, fieldset textarea {
+    border: 1px solid rgb(229, 231, 235);
+    margin-top: 5px;
+    padding: 0 3px;
+    outline-color: rgb(147, 51, 234);
+    border-radius: 3px;
+}
+
+.flex .flex-row {
+    gap: 5px;
+    align-items: self-start;
+}
+
+.related-widget-wrapper {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
