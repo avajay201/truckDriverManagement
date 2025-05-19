@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import welcome
+from .views import welcome, generate_report
 
 
 urlpatterns = [
-    path('', welcome)
+    path('', welcome),
+    path('generate-report/', generate_report, name='generate_report'),
 ]

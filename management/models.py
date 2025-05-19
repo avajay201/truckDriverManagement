@@ -6,12 +6,10 @@ class Dispatch(models.Model):
     company_or_team = models.CharField(max_length=100)
     work_type = models.CharField(max_length=100)
 
-    # Pickup Information
     pickup_location = models.CharField(max_length=255)
     material_type = models.CharField(max_length=100)
     material_count = models.PositiveIntegerField()
 
-    # Billing
     todays_bill = models.DecimalField(max_digits=10, decimal_places=2)
     previous_pending = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     amount_paid = models.BooleanField(default=False)
@@ -20,8 +18,6 @@ class Dispatch(models.Model):
     def __str__(self):
         return f"{self.date} - {self.company_or_team}"
 
-
-# Truck associated with a Dispatch
 class TruckDetail(models.Model):
     dispatch = models.ForeignKey(Dispatch, on_delete=models.CASCADE, related_name='trucks')
     unit_number = models.CharField(max_length=100)
@@ -32,8 +28,6 @@ class TruckDetail(models.Model):
     def __str__(self):
         return f"{self.unit_number} - {self.driver_name}"
 
-
-# 407ETR Usage
 class HighwayUsage(models.Model):
     dispatch = models.ForeignKey(Dispatch, on_delete=models.CASCADE, related_name='highway_trips')
     entry_location = models.CharField(max_length=100)
@@ -44,7 +38,7 @@ class HighwayUsage(models.Model):
     def __str__(self):
         return f"{self.entry_location} to {self.exit_location}"
 
-class Employee(models.Model):
+class Driver(models.Model):
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
@@ -68,7 +62,7 @@ class VehicleMaintenance(models.Model):
         return f"{self.unit_number} - {self.maintenance_date}"
 
 class Payment(models.Model):
-    employee = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, blank=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True, blank=True)
     date = models.DateField()
     description = models.TextField()
     amount = models.DecimalField(max_digits=10, decimal_places=2)
@@ -88,7 +82,7 @@ class CompanyInvoice(models.Model):
         return f"{self.company_name} - {self.invoice_date}"
 
 class OffenceTicket(models.Model):
-    driver = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    driver = models.ForeignKey(Driver, on_delete=models.SET_NULL, null=True)
     vehicle_unit_number = models.CharField(max_length=100)
     offence_date = models.DateField()
     offence_type = models.CharField(max_length=100)

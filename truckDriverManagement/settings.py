@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from django.templatetags.static import static
+from django.utils.translation import gettext_lazy as _
+
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,7 +143,7 @@ LOGIN_REDIRECT_URL = '/dashboard/'
 UNFOLD = {
     "SITE_TITLE": "TMS",
     "SITE_HEADER": "Transport Management System",
-    "SITE_URL": "/dashboard/",
+    "SITE_URL": "/",
     "SITE_ICON": lambda request: static("logo.png"),
     "COLORS": {
         "primary": {
@@ -157,8 +159,95 @@ UNFOLD = {
             "900": "88 28 135",
         },
     },
+    "SHOW_BACK_BUTTON": True,
+    
+    "SIDEBAR": {
+        "show_search": True,
+        "navigation": [
+            {
+                "items": [
+                    {
+                        "title": _("Dashboard "),
+                        "icon": "home",
+                        "link": reverse_lazy("admin:index"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                ]
+            },
+            {
+                "title": _("User Settings"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Users"),
+                        "icon": "people",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                    {
+                        "title": _("Groups"),
+                        "icon": "groups",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                        "permission": lambda request: request.user.is_superuser,
+                    },
+                ],
+            },
+            {
+                "title": _("Management"),
+                "separator": True,
+                "collapsible": True,
+                "items": [
+                    {
+                        "title": _("Dispatches"),
+                        "icon": "list",
+                        "link": reverse_lazy("admin:management_dispatch_changelist"),
+                    },
+                    {
+                        "title": _("Employees"),
+                        "icon": "person",
+                        "link": reverse_lazy("admin:management_employee_changelist"),
+                    },
+                    {
+                        "title": _("Truck Details"),
+                        "icon": "local_shipping",
+                        "link": reverse_lazy("admin:management_truckdetail_changelist"),
+                    },
+                    {
+                        "title": _("Highway Usage"),
+                        "icon": "road",
+                        "link": reverse_lazy("admin:management_highwayusage_changelist"),
+                    },
+                    {
+                        "title": _("Invoices"),
+                        "icon": "receipt",
+                        "link": reverse_lazy("admin:management_companyinvoice_changelist"),
+                    },
+                    {
+                        "title": _("Payments"),
+                        "icon": "credit_card",
+                        "link": reverse_lazy("admin:management_payment_changelist"),
+                    },
+                    {
+                        "title": _("Offences"),
+                        "icon": "gavel",
+                        "link": reverse_lazy("admin:management_offenceticket_changelist"),
+                    },
+                    {
+                        "title": _("Maintenance"),
+                        "icon": "build",
+                        "link": reverse_lazy("admin:management_vehiclemaintenance_changelist"),
+                    },
+                    {
+                        "title": _("Records"),
+                        "icon": "description",
+                        "link": reverse_lazy("admin:management_record_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
 }
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
