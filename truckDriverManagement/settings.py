@@ -59,7 +59,7 @@ ROOT_URLCONF = 'truckDriverManagement.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,13 +135,13 @@ MEDIA_URL = '/media/'
 
 # The filesystem path where media files will be stored
 MEDIA_ROOT = BASE_DIR / 'media'
-LOGIN_REDIRECT_URL = '/dashbord/'
+LOGIN_REDIRECT_URL = '/dashboard/'
 
 
 UNFOLD = {
     "SITE_TITLE": "TMS",
     "SITE_HEADER": "Transport Management System",
-    "SITE_URL": "/dashbord/",
+    "SITE_URL": "/dashboard/",
     "SITE_ICON": lambda request: static("logo.png"),
     "COLORS": {
         "primary": {
